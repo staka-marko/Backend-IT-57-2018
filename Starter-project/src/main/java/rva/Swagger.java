@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
 @Configuration
-public class Swagger {
+public class Swagger {/*
 
 	public static final Contact DEFAULT_CONTACT = new Contact("Marko Staka", "https://github.com/staka-marko","staka.99@uns.ac.rs");
 				
@@ -67,6 +67,6 @@ public class Swagger {
 	
 	@GetMapping("tip_racuna")
 	@ApiOperation(value = "Vraća kolekciju svih tipova racuna iz baze podataka")
-	public void getTipoviRacuna() {}
+	public void getTipoviRacuna() {}*/
 
 }
