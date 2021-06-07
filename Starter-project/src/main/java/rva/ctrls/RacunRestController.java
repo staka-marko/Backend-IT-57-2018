@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import rva.jpa.Klijent;
 import rva.jpa.Racun;
 import rva.repository.KlijentRepository;
@@ -24,6 +26,8 @@ import rva.repository.RacunRepository;
 
 @CrossOrigin
 @RestController
+@Api(tags = {"Račun CRUD operacije"})
+
 public class RacunRestController {
 	
 	@Autowired
@@ -36,16 +40,19 @@ public class RacunRestController {
 	private KlijentRepository klijentRepository;
 	
 	@GetMapping("racun")
+	@ApiOperation(value = "Vraća kolekciju svih računa iz baze podataka")
 	public Collection<Racun> getRacuni() {
 		return racunRepository.findAll();
 	}
 	
-	@GetMapping("racun/{id}")
+	@GetMapping("racun/{id}")	
+	@ApiOperation(value = "Vraća račun iz baze podataka čija je id vrijednost proslijeđena kao path varijabla")
 	public Racun getRacun(@PathVariable("id") Integer id) {
 		return racunRepository.getOne(id);
 	}
 	
 	@GetMapping("racuni_za_klijentaId/{id}")
+	@ApiOperation(value = "Vraća kolekciju svih račune za klijente iz baze podataka koji imaju id vrijednost kao proslijeđena path varijabla")
 	public Collection<Racun> racuniPoKlijentuId(@PathVariable("id") Integer id){
 		Klijent k = klijentRepository.getOne(id);
 		return racunRepository.findByKlijent(k);
@@ -54,6 +61,7 @@ public class RacunRestController {
 	// Less than sam iskoristio kod klijenta
 	
 	@PostMapping("racun")
+	@ApiOperation(value = "Upisuje račun u bazu podataka")
 	public ResponseEntity<Racun> insertRacun(@RequestBody Racun racun){
 		if(!racunRepository.existsById(racun.getId())) {
 			racunRepository.save(racun);
@@ -63,6 +71,7 @@ public class RacunRestController {
 	}
 	
 	@PutMapping("racun")
+	@ApiOperation(value = "Modifikuje postojeći račun u bazi podataka")
 	public ResponseEntity<Racun> updateRacun(@RequestBody Racun racun){
 		if(!racunRepository.existsById(racun.getId())) {
 			return new ResponseEntity<Racun>(HttpStatus.NO_CONTENT);
@@ -73,6 +82,7 @@ public class RacunRestController {
 	
 	@Transactional
 	@DeleteMapping("racun/{id}")
+	@ApiOperation(value = "Briše račun iz baze podataka čija je id vrijednost proslijeđena kao path varijabla")
 	public ResponseEntity<Racun> deleteRacun(@PathVariable("id") Integer id){
 		if(!racunRepository.existsById(id)) {
 			return new ResponseEntity<Racun>(HttpStatus.NO_CONTENT);
@@ -81,7 +91,7 @@ public class RacunRestController {
 		if(id == -100) {
 			jdbcTemplate.execute(
 					"INSERT INTO \"racun\"(\"id\", \"naziv\", \"oznaka\", \"opis\", \"tip_racuna\", \"klijent\" )"
-					+ "VALUES (-100, 'TestNaziv', 'TestOznaka', 'TestOpis', 1, 1)"
+					+ "VALUES (-100, 'TNaziv', 'TOznaka', 'TOpis', 1, 1)"
 					);
 		}
 		return new ResponseEntity<Racun>(HttpStatus.OK);

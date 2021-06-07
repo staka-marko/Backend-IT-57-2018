@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import rva.jpa.Kredit;
 import rva.repository.KreditRepository;
 
 @CrossOrigin
 @RestController
+@Api(tags = {"Kredit CRUD operacije"})
 public class KreditRestController {
 	
 	@Autowired
@@ -29,21 +32,25 @@ public class KreditRestController {
 	private KreditRepository kreditRepository;
 	
 	@GetMapping("kredit")
+	@ApiOperation(value = "Vraća kolekciju svih kredita iz baze podataka")
 	public Collection<Kredit> getKrediti() {
 		return kreditRepository.findAll();
 	}
 	
 	@GetMapping("kredit/{id}")
+	@ApiOperation(value = "Vraća kredit iz baze podataka čija je id vrijednost proslijeđena kao path varijabla")
 	public Kredit getKredit(@PathVariable("id") Integer id) {
 		return kreditRepository.getOne(id);
 	}
 	
 	@GetMapping("kredit_naziv/{naziv}")
+	@ApiOperation(value = "Vraća kolekciju svih kredita iz baze podataka koji u nazivu sadrže string proslijeđen kao path varijabla")
 	public Collection<Kredit> getKreditByNaziv(@PathVariable("naziv") String naziv) {
 		return kreditRepository.findByNazivContainingIgnoreCase(naziv);
 	}
 	
 	@PostMapping("kredit")
+	@ApiOperation(value = "Upisuje kredit u bazu podataka")
 	public ResponseEntity<Kredit> insertKredit(@RequestBody Kredit kredit){
 		if(!kreditRepository.existsById(kredit.getId())) {
 			kreditRepository.save(kredit);
@@ -53,6 +60,7 @@ public class KreditRestController {
 	}
 	
 	@PutMapping("kredit")
+	@ApiOperation(value = "Modifikuje postojeći kredit u bazi podataka")
 	public ResponseEntity<Kredit> updateKredit(@RequestBody Kredit kredit){
 		if(!kreditRepository.existsById(kredit.getId())) {
 			return new ResponseEntity<Kredit>(HttpStatus.NO_CONTENT);
@@ -62,6 +70,7 @@ public class KreditRestController {
 	}
 	
 	@DeleteMapping("kredit/{id}")
+	@ApiOperation(value = "Briše kredit iz baze podataka čija je id vrijednost proslijeđena kao path varijabla")
 	public ResponseEntity<Kredit> deleteKredit(@PathVariable("id") Integer id){
 		if(!kreditRepository.existsById(id)){
 			return new ResponseEntity<Kredit>(HttpStatus.NO_CONTENT);
@@ -70,7 +79,7 @@ public class KreditRestController {
 		if(id == -100) {
 			jdbcTemplate.execute(
 					"INSERT INTO \"kredit\"(\"id\", \"naziv\", \"opis\", \"oznaka\")"
-					+ "VALUES (-100, 'TestNaziv', 'TestOpis', 'TestOznaka')"
+					+ "VALUES (-100, 'TNaziv', 'TOpis', 'TOznaka')"
 					);
 		}
 		return new ResponseEntity<Kredit>(HttpStatus.OK);

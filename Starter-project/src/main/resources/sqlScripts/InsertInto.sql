@@ -1,14 +1,14 @@
 -- TIP_RACUNA PODACI
 INSERT INTO "tip_racuna"("id","naziv","oznaka","opis")
-VALUES(nextval('tip_racuna_seq'), 'Tekuci racun', 'TKR', 'Racun koji je neophodan za obavljanje obicnih transakcija');
+VALUES(nextval('tip_racuna_seq'), 'Osnovni racun', 'OSR', 'Ovaj paket daje mogucnost da koristis trajni nalog za placanje mesecnih obaveza');
 INSERT INTO "tip_racuna"("id","naziv","oznaka","opis")
-VALUES(nextval('tip_racuna_seq'), 'Devizni racun', 'DZR', 'Racun koji je neophodan za transakcije sa inostranstvom');
+VALUES(nextval('tip_racuna_seq'), 'Tekuci racun', 'TKR', 'Paket sadrzi vise usluga. Ovo je paket za zaposlena lica i on obuhvata: tekeci racun, Visa Electron debitnu karticu, SMS servis, izvod po tekucem racunu');
 INSERT INTO "tip_racuna"("id","naziv","oznaka","opis")
-VALUES(nextval('tip_racuna_seq'), 'Studentski racun', 'STR', 'Racun koji omogucava povlastice studentima');
+VALUES(nextval('tip_racuna_seq'), 'Devizni racun', 'DVR', 'Racun koji sluzi za obavljanje transakcija sa izabranom stranom valutom');
 INSERT INTO "tip_racuna"("id","naziv","oznaka","opis")
 VALUES(nextval('tip_racuna_seq'), 'Privremeni racun', 'PVR', 'Racun koji je se gasi nakon nekog vremena');
 INSERT INTO "tip_racuna"("id","naziv","oznaka","opis")
-VALUES(nextval('tip_racuna_seq'), 'Penzionerski racun', 'PZR', 'Racun koji je omogucava povlastice penzionerima');
+VALUES(nextval('tip_racuna_seq'), 'Total paket', 'TTP', 'Racun koji obuhvata usluge svih drugih racuna uz mnoge pogodnosti');
 
 INSERT INTO "tip_racuna"("id","naziv","oznaka","opis")
 VALUES(-100, 'TestNaziv', 'TestOznaka', 'TestOpis');
@@ -46,15 +46,15 @@ VALUES(-100, 'TestIme', 'TestPrezime', 100000,2);
 
 --RACUN PODACI
 INSERT INTO "racun"("id","naziv","oznaka","opis","tip_racuna","klijent")
-VALUES(nextval('racun_seq'),'Racun klijenta 1','RC001','Racun koji koristi klijent br. 1',1,5);
+VALUES(nextval('racun_seq'),'Studentski racun','RC301','Racun namijenjen studentima, privremenog karaktera, bez naplate usluga transakcija',4,5);
 INSERT INTO "racun"("id","naziv","oznaka","opis","tip_racuna","klijent")
-VALUES(nextval('racun_seq'),'Racun klijenta 2','RC002','Racun koji koristi klijent br. 2',5,4);
+VALUES(nextval('racun_seq'),'Racun fizickog lica','RC788','Standardne usluge',5,4);
 INSERT INTO "racun"("id","naziv","oznaka","opis","tip_racuna","klijent")
-VALUES(nextval('racun_seq'),'Racun klijenta 3','RC003','Racun koji koristi klijent br. 3',4,3);
+VALUES(nextval('racun_seq'),'Racun sa oslobodjenim obavezama','RC413','Racun za koji se ne naplacuju usluge transakcija iz odredjenog razloga',4,4);
 INSERT INTO "racun"("id","naziv","oznaka","opis","tip_racuna","klijent")
-VALUES(nextval('racun_seq'),'Racun klijenta 4','RC004','Racun koji koristi klijent br. 4',2,2);
+VALUES(nextval('racun_seq'),'Racun fizickog lica','RC755','Standardne usluge',2,2);
 INSERT INTO "racun"("id","naziv","oznaka","opis","tip_racuna","klijent")
-VALUES(nextval('racun_seq'),'Racun klijenta 5','RC005','Racun koji koristi klijent br. 5',3,1);
+VALUES(nextval('racun_seq'),'Racun fizickog lica','RC953','Standardne usluge',3,1);
 
 INSERT INTO "racun"("id","naziv","oznaka","opis","tip_racuna","klijent")
 VALUES(-100,'TestNaziv','TestOznaka','TestOpis',1,5);
